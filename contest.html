@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="contes.js"></script>
+  <title>Contester un bannissement</title>
+
+</head>
+
+<body>
+  <main>
+    <h1>Contester un bannissement</h1>
+    <p>
+      Explique ta situation. Les informations envoyées seront destinées
+      à l’équipe de modération.
+    </p>
+
+    <form id="appeal-form">
+      <label for="discord-name">Nom d’utilisateur Discord</label>
+      <input id="discord-name" name="discordName" required maxlength="80">
+
+      <label for="reason">Pourquoi contestes-tu le bannissement ?</label>
+      <textarea id="reason" name="reason" required maxlength="2000"></textarea>
+
+      <button type="submit">Envoyer ma demande</button>
+    </form>
+
+    <p id="status" role="status"></p>
+
+    <section id="conversation" hidden>
+      <h2>Conversation de démonstration</h2>
+
+      <div id="messages" aria-live="polite"></div>
+
+      <form id="reply-form">
+        <label for="reply">Ton message</label>
+        <textarea id="reply" required maxlength="2000"></textarea>
+        <button type="submit">Envoyer le message</button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>
