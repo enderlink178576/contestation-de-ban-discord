@@ -18,9 +18,9 @@ export async function onRequestPost({ request, env }) {
   const accountName = String(data.accountName || "").trim();
   const reason = String(data.reason || "").trim();
 
-  if (!["Twitch", "Discord","Youtube"].includes(platform)) {
+  if (!["Twitch", "Discord", "Youtube"].includes(platform)) {
     return Response.json(
-      { error: "Choisis Twitch ou Discord ou Youtube." },
+      { error: "Choisis Twitch, Discord ou Youtube." },
       { status: 400 }
     );
   }
@@ -37,33 +37,44 @@ export async function onRequestPost({ request, env }) {
     );
   }
 
-const moderationRoles = {
-  Twitch: "1555693891863453756",
-  Discord: "1539393533838885035",
-  Youtube: "1555694201478324224"
-};
+  const moderationRoles = {
+    Twitch: "1555693891863453756",
+    Discord: "1539393533838885035",
+    Youtube: "1555694201478324224"
+  };
 
-const roleId = moderationRoles[platform];
+  const roleId = moderationRoles[platform];
 
-if (!roleId) {
-  throw new Error("Plateforme non reconnue");
-}
+  const message = {
+    content: `<@&${roleId}> Nouvelle demande d'appel pour ${platform}`,
+    allowed_mentions: {
+      roles: [roleId]
+    },
+    embeds: [
+      {
+        title: `Demande d'appel — ${platform}`,
+        fields: [
+          { name: "Compte", value: accountName },
+          { name: "Motif", value: reason }
+        ]
+      }
+    ]
+  };
 
-const message = {
-  content: `<@&${roleId}> Nouvelle demande d'appel pour ${platform}`,
-  allowed_mentions: {
-    roles: [roleId]
-  },
-  embeds: [
-    {
-      title: `Demande d'appel — ${platform}`,
-      fields: [
-        { name: "Compte", value: accountName },
-        { name: "Motif", value: reason }
-      ]
-    }
-  ]
-};
+  let discordResponse;
+
+  try {
+    discordResponse = await fetch(env.DISCORD_WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(message)
+    });
+  } catch {
+    return Response.json(
+      { error: "Impossible de contacter Discord." },
+      { status: 502 }
+    );
+  }
 
   if (!discordResponse.ok) {
     return Response.json(
