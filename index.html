@@ -3,62 +3,58 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="style.css">
-  <script defer src="contes.js"></script>
-  <script defer src="thème.js"></script>
-  <title>Contester un bannissement</title>
-
+  <title>Envoyer une demande</title>
 </head>
-
 <body>
-  <header>
-    <nav>
-      <div class="menu-toggle" id="menu-toggle">
-        ☰
-      </div>
-      <ul id="menu-list">
-        <div class="buttons-nav">
-          <li><a href="index.html">Accueil</a></li>
-          <li><a href="contest.html">contestation</a></li>
-          <li><a href="reseau.html">Mes réseaux</a></li>
-        </div>
-        <button id="toggle-theme">🌙</button>
-      </ul>
-    </nav>
-  </header>
-  <main>
-    <h1>Contester un bannissement</h1>
+  <h1>Demande de recours</h1>
+
+  <form id="appeal-form">
     <p>
-      Explique ta situation. Les informations envoyées seront destinées
-      à l’équipe de modération.
+      <label for="discordName">Nom ou identifiant Discord</label><br>
+      <input id="discordName" name="discordName" maxlength="100" required>
     </p>
 
-    <form id="appeal-form">
-      <label for="discord-name">Nom d’utilisateur Discord</label>
-      <input id="discord-name" name="discordName" required maxlength="80">
+    <p>
+      <label for="reason">Motif de la demande</label><br>
+      <textarea id="reason" name="reason" maxlength="3000" required></textarea>
+    </p>
 
-      <label for="reason">Pourquoi contestes-tu le bannissement ?</label>
-      <textarea id="reason" name="reason" required maxlength="2000"></textarea>
+    <button type="submit">Envoyer la demande</button>
+  </form>
 
-      <button type="submit">Envoyer ma demande</button>
-    </form>
+  <p id="status" role="status"></p>
 
-    <p id="status" role="status"></p>
+  <script>
+    const form = document.querySelector("#appeal-form");
+    const status = document.querySelector("#status");
 
-    <section id="conversation" hidden>
-      <h2>Conversation de démonstration</h2>
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
 
-      <div id="messages" aria-live="polite"></div>
+      const discordName = document.querySelector("#discordName").value.trim();
+      const reason = document.querySelector("#reason").value.trim();
 
-      <form id="reply-form">
-        <label for="reply">Ton message</label>
-        <textarea id="reply" required maxlength="2000"></textarea>
-        <button type="submit">Envoyer le message</button>
-      </form>
-    </section>
-  </main>
-  <footer>
-    <p>©2026 Made by enderlink178576</p>
-  </footer>
+      status.textContent = "Envoi en cours…";
+
+      try {
+        const response = await fetch("/api/appeals", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ discordName, reason })
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(result.error || "L'envoi a échoué.");
+        }
+
+        status.textContent = "Demande envoyée avec succès.";
+        form.reset();
+      } catch (error) {
+        status.textContent = error.message || "Impossible d'envoyer la demande.";
+      }
+    });
+  </script>
 </body>
 </html>
