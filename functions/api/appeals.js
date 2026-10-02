@@ -25,7 +25,7 @@ export async function onRequestPost({ request, env }) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      content: `Nouvelle demande\n**Compte Discord :** ${discordName}\n**Motif :**\n${reason}`
+      content: `Nouvelle demande @everyone\n**Compte Discord :** ${discordName}\n**Motif :**\n${reason}`
     })
   });
 
