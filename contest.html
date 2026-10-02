@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" sizes="64x64" href="image/logo-Youtube.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="image/logo-Youtube.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script defer src="theme.js"></script>
+  <title>Envoyer une demande</title>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="menu-toggle" id="menu-toggle">
+        ☰
+      </div>
+
+      <ul id="menu-list">
+        <a href="index.html"><img src="image/logo-Youtube.png" alt="logo-Youtube" class="logo-Youtube"></a>
+        <div class="buttons-nav">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="contest.html">Contestation</a></li>
+        <!--<li><a href="reseau.html">Nos réseaux</a></li>-->
+        </div>
+        <button id="toggle-theme">🌙</button>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <h1>Demande de recours</h1>
+
+    <form id="appeal-form">
+      <p>
+        <label for="discordName">Nom ou identifiant Discord</label><br>
+        <input id="discordName" name="discordName" maxlength="100" required>
+      </p>
+
+      <p>
+        <label for="reason">Motif de la demande</label><br>
+        <textarea id="reason" name="reason" maxlength="3000" required></textarea>
+      </p>
+
+      <button type="submit">Envoyer la demande</button>
+    </form>
+
+    <p id="status" role="status"></p>
+  </main>
+  <footer>
+    <p>Made by <span class="accentuated">enderlink178576</span></p>
+    <p>©2026</p>
+  </footer>
+  <script>
+    const form = document.querySelector("#appeal-form");
+    const status = document.querySelector("#status");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const discordName = document.querySelector("#discordName").value.trim();
+      const reason = document.querySelector("#reason").value.trim();
+
+      status.textContent = "Envoi en cours…";
+
+      try {
+        const response = await fetch("/api/appeals", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ discordName, reason })
+        });
+
+        // Ne lire le JSON que si la fonction Cloudflare en a renvoyé.
+        const result = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+          throw new Error(result.error || `Échec de l'envoi (erreur ${response.status}).`);
+        }
+
+        status.textContent = "Demande envoyée avec succès.";
+        form.reset();
+      } catch (error) {
+        status.textContent = error.message || "Impossible d'envoyer la demande.";
+      }
+    });
+  </script>
+</body>
+</html>

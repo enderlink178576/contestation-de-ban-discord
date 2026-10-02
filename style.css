@@ -113,6 +113,11 @@ nav a {
   align-items: center;
 }
 
+button#toggle-theme {
+    width: 175px;
+    margin: auto;
+}
+
 nav a:hover {
   background: #555;
 }
@@ -159,10 +164,6 @@ h1 {
   cursor: pointer;
 }
 
-main h1,
-main p {
-  margin: 0 20%;
-}
 @media (min-width: 769px) {
   .title {
   font-family: 'Poppins', sans-serif;
@@ -287,4 +288,15 @@ body {
   color: var(--text);
   font-family: Arial, sans-serif;
   transition: background-color 0.3s, color 0.3s;
+}
+/*image*/
+.logo-Youtube{
+  width: auto;
+  height: 70px;
+  border-radius: 400px;
+  vertical-align: middle;
+  text-align: left;
+  margin-right: 0px;
+  margin-left: 0px;
+  
 }
