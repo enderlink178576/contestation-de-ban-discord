@@ -42,7 +42,8 @@ export async function onRequestPost({ request, env }) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       content:
-        `Nouvelle demande — plateforme : **${platform}**\n` +
+        `Nouvelle demande — plateforme @modérateur`${platform} `: \n`
+        `**${platform}**\n` +
         `**Compte :** ${accountName}\n` +
         `**Motif :**\n${reason}`
     })
