@@ -43,10 +43,11 @@
           body: JSON.stringify({ discordName, reason })
         });
 
-        const result = await response.json();
+        // Ne lire le JSON que si la fonction Cloudflare en a renvoyé.
+        const result = await response.json().catch(() => ({}));
 
         if (!response.ok) {
-          throw new Error(result.error || "L'envoi a échoué.");
+          throw new Error(result.error || `Échec de l'envoi (erreur ${response.status}).`);
         }
 
         status.textContent = "Demande envoyée avec succès.";
