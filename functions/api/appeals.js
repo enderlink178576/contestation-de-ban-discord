@@ -18,9 +18,9 @@ export async function onRequestPost({ request, env }) {
   const accountName = String(data.accountName || "").trim();
   const reason = String(data.reason || "").trim();
 
-  if (!["Twitch", "Discord"].includes(platform)) {
+  if (!["Twitch", "Discord","Youtube"].includes(platform)) {
     return Response.json(
-      { error: "Choisis Twitch ou Discord." },
+      { error: "Choisis Twitch ou Discord ou Youtube." },
       { status: 400 }
     );
   }
@@ -37,17 +37,33 @@ export async function onRequestPost({ request, env }) {
     );
   }
 
-  const discordResponse = await fetch(env.DISCORD_WEBHOOK_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      content:
-        `Nouvelle demande — plateforme @modérateur`${platform} `: \n`
-        `**${platform}**\n` +
-        `**Compte :** ${accountName}\n` +
-        `**Motif :**\n${reason}`
-    })
-  });
+const moderationRoles = {
+  Twitch: "1555693891863453756",
+  Discord: "1539393533838885035",
+  Youtube: "1555694201478324224"
+};
+
+const roleId = moderationRoles[platform];
+
+if (!roleId) {
+  throw new Error("Plateforme non reconnue");
+}
+
+const message = {
+  content: `<@&${roleId}> Nouvelle demande d'appel pour ${platform}`,
+  allowed_mentions: {
+    roles: [roleId]
+  },
+  embeds: [
+    {
+      title: `Demande d'appel — ${platform}`,
+      fields: [
+        { name: "Compte", value: accountName },
+        { name: "Motif", value: reason }
+      ]
+    }
+  ]
+};
 
   if (!discordResponse.ok) {
     return Response.json(
