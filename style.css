@@ -298,5 +298,43 @@ body {
   text-align: left;
   margin-right: 0px;
   margin-left: 0px;
-  
+}
+
+.banniere-chaine-youtube{
+  width: 100%;
+}
+.g-ytsubscribe{
+  background-color: rgb(252, 249, 249);
+}
+.reseaux-icon {
+  width: 100px;
+  height: 100px;
+  vertical-align: middle;
+  margin-right: 5px;
+  border-radius: 400px;
+}
+.reseaux {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #1a1c22;
+  padding: 15px;
+  border-radius: 10px;
+  max-width: 250px;
+  margin-bottom: 20px;
+}
+.lien-reseaux{
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: var(--text);
+  background-clip: text;
+}
+.mes-reseaux{
+  /* limit the size to half of the viewport and keep the block on the left side */
+  width: 50%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 30px;
+  margin-left: 0; /* remove previous offset so the element hugs the left edge */
+  margin-top: 30px;
 }
