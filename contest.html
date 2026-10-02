@@ -31,20 +31,39 @@
     <h1>Demande de recours</h1>
 
     <form id="appeal-form">
-      <p>
-        <label for="discordName">Nom ou identifiant Discord</label><br>
-        <input id="discordName" name="discordName" maxlength="100" required>
-      </p>
+  <p>
+    <label for="platform">Plateforme concernée</label><br>
+    <select id="platform" name="platform" required>
+      <option value="">Choisir une plateforme</option>
+      <option value="Discord">Discord</option>
+      <option value="Twitch">Twitch</option>
+    </select>
+  </p>
 
-      <p>
-        <label for="reason">Motif de la demande</label><br>
-        <textarea id="reason" name="reason" maxlength="3000" required></textarea>
-      </p>
+  <p>
+    <label for="accountName">Nom ou identifiant du compte</label><br>
+    <input
+      id="accountName"
+      name="accountName"
+      maxlength="100"
+      required
+    >
+  </p>
 
-      <button type="submit">Envoyer la demande</button>
-    </form>
+  <p>
+    <label for="reason">Motif de la demande</label><br>
+    <textarea
+      id="reason"
+      name="reason"
+      maxlength="3000"
+      required
+    ></textarea>
+  </p>
 
-    <p id="status" role="status"></p>
+  <button type="submit">Envoyer la demande</button>
+</form>
+
+<p id="status" role="status"></p>
   </main>
   <footer>
     <p>Made by <span class="accentuated">enderlink178576</span></p>
@@ -56,32 +75,63 @@
 
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
-
-      const discordName = document.querySelector("#discordName").value.trim();
-      const reason = document.querySelector("#reason").value.trim();
-
       status.textContent = "Envoi en cours…";
+
+      const formData = new FormData(form);
 
       try {
         const response = await fetch("/api/appeals", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ discordName, reason })
+          body: JSON.stringify({
+            platform: formData.get("platform"),
+            accountName: formData.get("accountName"),
+            reason: formData.get("reason")
+          })
         });
 
-        // Ne lire le JSON que si la fonction Cloudflare en a renvoyé.
-        const result = await response.json().catch(() => ({}));
+        const result = await response.json();
 
         if (!response.ok) {
-          throw new Error(result.error || `Échec de l'envoi (erreur ${response.status}).`);
+          throw new Error(result.error || "L'envoi a échoué.");
         }
 
-        status.textContent = "Demande envoyée avec succès.";
+        status.textContent = "Demande envoyée.";
         form.reset();
       } catch (error) {
-        status.textContent = error.message || "Impossible d'envoyer la demande.";
+        status.textContent = error.message || "Une erreur est survenue.";
       }
-    });
+});
   </script>
+  <style>
+    .choix {
+      position: relative;
+      display: inline-block;
+    }
+
+    #options {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 100%;
+      background: white;
+      border: 1px solid #ccc;
+    }
+
+    #options button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      border: 0;
+      background: white;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    #options button:hover {
+      background: #eee;
+    }
+  </style>
+
 </body>
 </html>

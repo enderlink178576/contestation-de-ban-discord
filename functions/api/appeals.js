@@ -14,24 +14,46 @@ export async function onRequestPost({ request, env }) {
     return Response.json({ error: "Données invalides." }, { status: 400 });
   }
 
-  const discordName = String(data.discordName || "").trim();
+  const platform = String(data.platform || "").trim();
+  const accountName = String(data.accountName || "").trim();
   const reason = String(data.reason || "").trim();
 
-  if (!discordName || !reason || discordName.length > 100 || reason.length > 3000) {
-    return Response.json({ error: "Vérifie les champs du formulaire." }, { status: 400 });
+  if (!["Twitch", "Discord"].includes(platform)) {
+    return Response.json(
+      { error: "Choisis Twitch ou Discord." },
+      { status: 400 }
+    );
+  }
+
+  if (
+    !accountName ||
+    !reason ||
+    accountName.length > 100 ||
+    reason.length > 3000
+  ) {
+    return Response.json(
+      { error: "Vérifie les champs du formulaire." },
+      { status: 400 }
+    );
   }
 
   const discordResponse = await fetch(env.DISCORD_WEBHOOK_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      content: `Nouvelle demande @everyone\n**Compte Discord :** ${discordName}\n**Motif :**\n${reason}`
+      content:
+        `Nouvelle demande — plateforme : **${platform}**\n` +
+        `**Compte :** ${accountName}\n` +
+        `**Motif :**\n${reason}`
     })
   });
 
   if (!discordResponse.ok) {
-    return Response.json({ error: "Discord n'a pas accepté la demande." }, { status: 502 });
+    return Response.json(
+      { error: "Discord n'a pas accepté la demande." },
+      { status: 502 }
+    );
   }
 
-  return Response.json({ ok: true });
+  return Response.json({ success: true });
 }
