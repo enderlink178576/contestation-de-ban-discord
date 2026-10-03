@@ -330,11 +330,48 @@ body {
 }
 .mes-reseaux{
   /* limit the size to half of the viewport and keep the block on the left side */
-  width: 50%;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
   gap: 30px;
   margin-left: 0; /* remove previous offset so the element hugs the left edge */
   margin-top: 30px;
+}
+/*mise en pages de l'acceuille*/
+.accueil {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  text-align: center;
+}
+
+.fond-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.accueil::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.contenu {
+  position: relative;
+  z-index: 1;
+  padding: 2rem;
+  font-size: 3rem;
+
+}
+.red-accentuated {
+  background: linear-gradient(90deg, #ff5c5c, var(--text));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
