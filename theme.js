@@ -2,7 +2,7 @@ function applyTheme(theme) {
   const root = document.documentElement.style;
   if (theme === 'dark') {
     root.setProperty('--bg', '#000000');
-    root.setProperty('--surface', '#86868600');
+    root.setProperty('--surface', '#8686862e');
     root.setProperty('--text', '#e9edf7');
     root.setProperty('--muted', '#a7b1c8');
     root.setProperty('--line', '#1b222e');

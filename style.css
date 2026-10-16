@@ -1,7 +1,6 @@
 body {
     font-family: system-ui, sans-serif;
     margin: 40px auto;
-    padding: 0 16px;
 }
 
 main {
@@ -73,7 +72,7 @@ button:hover {
 
   /* Light theme */
   --bg: #0b0f1a;
-  --surface: #0f1524;
+  --surface: #0f1524c5;
   --text: #e9edf7;
   --muted: #a7b1c8;
   --line: #252d3b;
@@ -317,7 +316,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background-color: #1a1c22;
+  background-color: var(--surface);
   padding: 15px;
   border-radius: 10px;
   max-width: 250px;
@@ -375,3 +374,44 @@ body {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+form {
+  display: grid;
+  gap: 8px;
+}
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+input,
+textarea {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+.contact-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  box-shadow: var(--shadow-2);
+}
+.btn--grad{ 
+  background: var(--grad-1) ;
+  color: #000000; border:0;
+  text-decoration: none;
+  }
+.btn{
+  appearance:none; border:0; cursor:pointer; font-weight:700;
+  padding:10px 14px; border-radius:12px;
+  box-shadow: var(--shadow-1);
+  text-decoration: none;}
+*{box-sizing:border-box}

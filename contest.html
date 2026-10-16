@@ -29,46 +29,49 @@
   </header>
   <main>
     <h1>Demande de recours</h1>
+    <div class='contact-card'>
+      <form id="appeal-form">
+        <p>
+          <label for="platform">Plateforme concernée</label><br>
+          <select id="platform" name="platform" required>
+            <option value="">Choisir une plateforme</option>
+            <option value="Discord">Discord</option>
+            <option value="Twitch">Twitch</option>
+            <option value="Youtube">Youtube</option>
+          </select>
+        </p>
 
-    <form id="appeal-form">
-  <p>
-    <label for="platform">Plateforme concernée</label><br>
-    <select id="platform" name="platform" required>
-      <option value="">Choisir une plateforme</option>
-      <option value="Discord">Discord</option>
-      <option value="Twitch">Twitch</option>
-      <option value="Youtube">Youtube</option>
-    </select>
-  </p>
+        <p>
+          <label for="accountName" >Nom ou identifiant du compte</label><br>
+          <input
+            id="accountName"
+            name="accountName"
+            placeholder="Nom du compte"
+            maxlength="100"
+            required
+          >
+        </p>
 
-  <p>
-    <label for="accountName">Nom ou identifiant du compte</label><br>
-    <input
-      id="accountName"
-      name="accountName"
-      maxlength="100"
-      required
-    >
-  </p>
+        <p>
+          <label for="reason">Motif de la demande</label><br>
+          <textarea
+            id="reason"
+            name="reason"
+            placeholder="Motif..."
+            maxlength="3000"
+            required
+          ></textarea>
+        </p>
 
-  <p>
-    <label for="reason">Motif de la demande</label><br>
-    <textarea
-      id="reason"
-      name="reason"
-      maxlength="3000"
-      required
-    ></textarea>
-  </p>
-
-  <button type="submit">Envoyer la demande</button>
-</form>
-
+        <button type="submit">Envoyer la demande</button>
+      </form>
+    </div>
 <p id="status" role="status"></p>
   </main>
   <footer>
     <p>Made by <span class="accentuated">enderlink178576</span></p>
     <p>©2026</p>
+    <p>1.00.2v</p>
   </footer>
   <script>
     const form = document.querySelector("#appeal-form");
