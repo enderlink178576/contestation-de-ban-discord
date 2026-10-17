@@ -3,6 +3,7 @@ function applyTheme(theme) {
   if (theme === 'dark') {
     root.setProperty('--bg', '#000000');
     root.setProperty('--surface', '#8686862e');
+    root.setProperty('--val-platform','#222');
     root.setProperty('--text', '#e9edf7');
     root.setProperty('--muted', '#a7b1c8');
     root.setProperty('--line', '#1b222e');
@@ -12,6 +13,7 @@ function applyTheme(theme) {
   } else {
     root.setProperty('--bg', '#ffffff');
     root.setProperty('--surface', '#6a6b6b4f');
+    root.setProperty('--val-platform','#eae9e97a');
     root.setProperty('--text', '#212529');
     root.setProperty('--muted', '#6c757d');
     root.setProperty('--line', '#dee2e6');

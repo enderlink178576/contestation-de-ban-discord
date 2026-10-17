@@ -72,6 +72,7 @@ button:hover {
 
   /* Light theme */
   --bg: #0b0f1a;
+  --val-platform:#222;
   --surface: #0f1524c5;
   --text: #e9edf7;
   --muted: #a7b1c8;
@@ -399,10 +400,14 @@ textarea {
 }
 .contact-card {
   background: var(--surface);
+  color: var(--text);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   padding: 18px;
   box-shadow: var(--shadow-2);
+}
+.val-plateform{
+  background: var(--val-platform);
 }
 .btn--grad{ 
   background: var(--grad-1) ;
