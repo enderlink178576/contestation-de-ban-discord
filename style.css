@@ -306,37 +306,55 @@ body {
 .g-ytsubscribe{
   background-color: rgb(252, 249, 249);
 }
+/* Icônes des réseaux */
 .reseaux-icon {
-  width: 100px;
-  height: 100px;
-  vertical-align: middle;
-  margin-right: 5px;
-  border-radius: 400px;
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    border-radius: 50%;
+    margin: 0;
 }
+
+/* Chaque carte */
 .reseaux {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  background-color: var(--surface);
-  padding: 15px;
-  border-radius: 10px;
-  max-width: 250px;
-  margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 250px;
+    height: 220px;
+    padding: 20px;
+
+    box-sizing: border-box;
+    background-color: var(--surface);
+    border-radius: 10px;
 }
-.lien-reseaux{
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: var(--text);
-  background-clip: text;
+
+/* Contenu de chaque carte */
+.reseaux h3 {
+    width: 100%;
+    margin: 0;
 }
-.mes-reseaux{
-  /* limit the size to half of the viewport and keep the block on the left side */
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 30px;
-  margin-left: 0; /* remove previous offset so the element hugs the left edge */
-  margin-top: 30px;
+
+.reseaux a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+    text-align: center;
+}
+
+/* Grille des cartes */
+.mes-reseaux {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 250px);
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
+    margin-top: 30px;
 }
 /*mise en pages de l'acceuille*/
 .accueil {
@@ -420,3 +438,40 @@ textarea {
   box-shadow: var(--shadow-1);
   text-decoration: none;}
 *{box-sizing:border-box}
+
+
+.contenu {
+    position: relative;
+    z-index: 1;
+}
+
+/* Section YouTube */
+.suite {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.suite h2 {
+    font-size: 2rem;
+    margin-bottom: 35px;
+}
+
+.video-container {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    width: 80%;
+    max-width: 1200px;
+    border-radius: 16px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.4);
+}
+
+.video-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
